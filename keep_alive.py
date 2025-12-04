@@ -1,5 +1,6 @@
 from threading import Thread
 from flask import Flask
+import os
 
 app = Flask('')
 
@@ -14,4 +15,5 @@ def run():
 def keep_alive():
     # Chạy máy chủ Flask trên một luồng riêng
     t = Thread(target=run)
+
     t.start()
