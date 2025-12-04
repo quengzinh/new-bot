@@ -10,7 +10,7 @@ answers = {
     "1a4": ["mẫu mực / màn đêm / dau bao / ca kiem / ca biet / day dua / dan bau / bao cao / lao hoa / dap hop / cao gia"],
     "2b1": ["xo bo / tu bi"],
     "b3c2": ["bach cau"],
-    "2u2": ["u buồn / xấu hổ "thư kí / yeu ot / dau co"],
+    "2u2": ["u buồn / xấu hổ / thư kí / yeu ot / dau co"],
     "1a5": ["cầu phao / bạc tình / sâu thẳm / vàng son / sâu bệnh / bao quát / hanh tau / xà ngang / bánh gai / báo mộng"],
     "g5o": ["ga hoa mo"],
     "4m2": ["khuc mac"],
@@ -203,4 +203,5 @@ def main():
 # ------------------ ĐIỂM KHỞI CHẠY ---------------------
 if __name__ == "__main__":
     main()
+
 
