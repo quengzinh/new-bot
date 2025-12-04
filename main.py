@@ -1,9 +1,9 @@
-import os, telebot
+import os
+from keep_alive import keep_alive
 # Thêm các import cần thiết cho python-telegram-bot
 from telegram.ext import ApplicationBuilder, MessageHandler, filters, ContextTypes
 from telegram import Update
-# Import hàm keep_alive
-from keep_alive import keep_alivee
+
 
 # Danh sách mã -> danh sách câu trả lời
 answers = {
@@ -148,4 +148,5 @@ def main():
 
 # ------------------ START ---------------------
 if __name__ == "__main__":
+
     main()
