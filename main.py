@@ -1,6 +1,6 @@
 import os
 from keep_alive import keep_alive
-# Thêm các import cần thiết cho python-telegram-bot
+# Các import cần thiết cho python-telegram-bot
 from telegram.ext import ApplicationBuilder, MessageHandler, filters, ContextTypes
 from telegram import Update
 
@@ -126,27 +126,45 @@ answers = {
     "3u1": ["y thuc"],
 }
 
+# ------------------ HÀM XỬ LÝ TIN NHẮN (MESSAGE HANDLER) ---------------------
+async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    # Lấy nội dung tin nhắn, chuyển về chữ thường và loại bỏ khoảng trắng thừa
+    text = update.message.text.lower().strip()
+
+    # Kiểm tra mã trong danh sách answers
+    if text in answers:
+        reply_list = answers[text]
+        # Nối các câu trả lời bằng dấu xuống dòng
+        reply_text = "\n".join(reply_list)
+    else:
+        reply_text = "Không tìm thấy mã bạn nhập. Vui lòng kiểm tra lại."
+
+    # Gửi tin nhắn trả lời
+    await update.message.reply_text(reply_text)
+
+
+# ------------------ HÀM KHỞI TẠO VÀ CHẠY BOT (MAIN FUNCTION) ---------------------
 def main():
-    # Lấy token từ biến môi trường BOT_TOKEN
+    # Lấy token từ biến môi trường BOT_TOKEN (đã thiết lập trên Render)
     TOKEN = os.getenv("BOT_TOKEN")
 
     if TOKEN is None:
         print("❌ LỖI: BOT_TOKEN không tồn tại trong biến môi trường!")
         return
 
-    # Sử dụng Webhook nếu muốn chuyển từ Polling sang Webhook
-    # Nhưng vì bạn đã dùng keep_alive, chúng ta vẫn dùng Polling
+    # 1. Xây dựng ứng dụng bot
     app = ApplicationBuilder().token(TOKEN).build()
 
+    # 2. Thêm trình xử lý: Xử lý TẤT CẢ tin nhắn văn bản KHÔNG phải là lệnh (/start)
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
 
-    # Khởi động keep_alive server
-    keep_alive() 
-    
+    # 3. Khởi động keep_alive server (để Render hoặc các dịch vụ khác ping)
+    keep_alive()
+
     print("Bot đang chạy Polling 24/7...")
-    app.run_polling() 
+    # 4. Bắt đầu Polling
+    app.run_polling()
 
-# ------------------ START ---------------------
+# ------------------ ĐIỂM KHỞI CHẠY ---------------------
 if __name__ == "__main__":
-
     main()
